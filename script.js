@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Check browser compatibility for command and commandFor attributes
+    checkBrowserCompatibility();
+    
     // Handle custom commands for the image rotation demo
     const demoImage = document.getElementById('demo-image');
     
@@ -50,3 +53,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Function to check browser compatibility
+function checkBrowserCompatibility() {
+    // Test if the browser supports the command attribute
+    const supportsCommand = 'command' in HTMLButtonElement.prototype;
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'browser-compatibility-notice';
+    
+    if (supportsCommand) {
+        notification.innerHTML = `
+            <div class="icon">✓</div>
+            <div class="message">
+                <strong>Great news!</strong> Your browser (Chrome ${getChromeVersion() || ''}) supports the new command and commandFor attributes.
+            </div>
+            <button class="close-notice">×</button>
+        `;
+        notification.classList.add('supported');
+    } else {
+        notification.innerHTML = `
+            <div class="icon">ⓘ</div>
+            <div class="message">
+                <strong>Browser compatibility notice:</strong> Your browser (Chrome ${getChromeVersion() || ''}) doesn't support the command and commandFor attributes yet. These features require Chrome 135+.
+            </div>
+            <button class="close-notice">×</button>
+        `;
+        notification.classList.add('unsupported');
+    }
+    
+    // Add close button functionality
+    notification.querySelector('.close-notice').addEventListener('click', () => {
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+    });
+    
+    document.body.appendChild(notification);
+    
+    // Fade in the notification
+    setTimeout(() => notification.style.opacity = '1', 10);
+}
+
+// Helper function to get Chrome version
+function getChromeVersion() {
+    const userAgent = navigator.userAgent;
+    const match = userAgent.match(/Chrome\/(\d+)/);
+    return match ? match[1] : null;
+}
