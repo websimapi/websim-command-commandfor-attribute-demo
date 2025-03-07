@@ -1,0 +1,131 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command & CommandFor Attribute Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Command & CommandFor Attributes</h1>
+        <p>Demonstrating Chrome 135's new declarative button behavior attributes</p>
+    </header>
+
+    <main>
+        <section class="demo-section">
+            <h2>Menu Example</h2>
+            <div class="example-container">
+                <button commandfor="my-menu" command="toggle-popover" class="demo-button">
+                    Toggle Menu
+                </button>
+                <div popover id="my-menu" class="popover-menu">
+                    <ul>
+                        <li><a href="#">Menu Item 1</a></li>
+                        <li><a href="#">Menu Item 2</a></li>
+                        <li><a href="#">Menu Item 3</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="code-display">
+                <pre><code>&lt;button commandfor="my-menu" command="toggle-popover"&gt;
+  Toggle Menu
+&lt;/button&gt;
+&lt;div popover id="my-menu"&gt;
+  &lt;!-- Menu content --&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Dialog Example</h2>
+            <div class="example-container">
+                <button commandfor="confirm-dialog" command="show-modal" class="demo-button">
+                    Open Dialog
+                </button>
+                <dialog id="confirm-dialog">
+                    <header>
+                        <h3>Confirm Action</h3>
+                        <button commandfor="confirm-dialog" command="close" aria-label="Close" value="close" class="close-button">
+                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </header>
+                    <p>Are you sure you want to proceed with this action?</p>
+                    <footer>
+                        <button commandfor="confirm-dialog" command="close" value="cancel" class="dialog-button cancel">
+                            Cancel
+                        </button>
+                        <button commandfor="confirm-dialog" command="close" value="confirm" class="dialog-button confirm">
+                            Confirm
+                        </button>
+                    </footer>
+                </dialog>
+            </div>
+            <div class="code-display">
+                <pre><code>&lt;button commandfor="confirm-dialog" command="show-modal"&gt;
+  Open Dialog
+&lt;/button&gt;
+&lt;dialog id="confirm-dialog"&gt;
+  &lt;!-- Dialog content --&gt;
+  &lt;button commandfor="confirm-dialog" command="close" value="cancel"&gt;
+    Cancel
+  &lt;/button&gt;
+  &lt;button commandfor="confirm-dialog" command="close" value="confirm"&gt;
+    Confirm
+  &lt;/button&gt;
+&lt;/dialog&gt;</code></pre>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Custom Command Example</h2>
+            <div class="example-container">
+                <div class="image-rotation-demo">
+                    <div class="button-group">
+                        <button commandfor="demo-image" command="--rotate-landscape" class="rotation-button">
+                            Landscape
+                        </button>
+                        <button commandfor="demo-image" command="--rotate-portrait" class="rotation-button">
+                            Portrait
+                        </button>
+                    </div>
+                    <div class="image-container">
+                        <svg id="demo-image" viewBox="0 0 200 200" width="200" height="200">
+                            <rect x="50" y="50" width="100" height="100" fill="#3498db" />
+                            <text x="100" y="110" text-anchor="middle" fill="white">Image</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="code-display">
+                <pre><code>&lt;button commandfor="demo-image" command="--rotate-landscape"&gt;
+  Landscape
+&lt;/button&gt;
+&lt;button commandfor="demo-image" command="--rotate-portrait"&gt;
+  Portrait
+&lt;/button&gt;
+&lt;img id="demo-image" src="photo.jpg"&gt;
+
+&lt;script&gt;
+  const image = document.getElementById("demo-image");
+  image.addEventListener("command", (event) => {
+    if (event.command == "--rotate-landscape") {
+      image.style.rotate = "-90deg"
+    } else if (event.command == "--rotate-portrait") {
+      image.style.rotate = "0deg"
+    }
+  });
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Chrome 135 feature demonstration - See <a href="https://developer.chrome.com/blog/command-commandfor" target="_blank">Chrome for Developers blog</a> for more details</p>
+    </footer>
+
+    <script src="script.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
